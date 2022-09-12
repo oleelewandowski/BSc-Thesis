@@ -1,0 +1,243 @@
+html,
+body {
+  height: 100%;
+  margin: 0%;
+  padding: 0%;
+  background-color: #333;
+  overflow-y: hidden;
+}
+body {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  text-shadow: 0 0.05rem 0.1rem rgb(0 0 0 / 50%);
+  box-shadow: inset 0 0 5rem rgb(0 0 0 / 50%);
+}
+body .wrapper {
+  height: 100%;
+  width: 85%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/*---------------------------- HEADER ----------------------------*/
+.header {
+  min-height: 10%;
+  display: flex;
+  align-self: center;
+  text-align: center;
+}
+.header #headerContent {
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+}
+
+/*---------------------------- CONTENT ----------------------------*/
+.content {
+  min-height: 80%;
+  display: flex;
+  flex-direction: column;
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  gap: 30px;
+}
+
+/*---------------- TOP ----------------*/
+.content #content-top {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+}
+/*------- LEFT -------*/
+.content #content-top #top-left {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+#myCanvas {
+  display: flex;
+  width: 100%;
+  height: 95%;
+}
+/*------- CENTER -------*/
+.content #content-top #top-center {
+  flex: 1 1 0px;
+}
+/*------- RIGHT -------*/
+.content #content-top #top-right {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+/*----------------  CENTER ---------------- */
+.content #content-center {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+}
+/*------- LEFT -------*/
+.content #content-center #center-left {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+/*------- CENTER -------*/
+.content #content-center #center-center {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+/*------- RIGHT -------*/
+.content #content-center #center-right {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+
+/*---------------- BOTTOM ---------------- */
+.content #content-bottom {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 30px;
+}
+/*------- LEFT -------*/
+.content #content-bottom #bottom-left {
+  flex: 1 1 0px;
+  border: 2px solid white;
+  box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+}
+/*-- NOISE GENERATOR --*/
+.slider {
+  -webkit-appearance: none;
+  width: 80%;
+  height: 20px;
+  background: white;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: black;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: black;
+  cursor: pointer;
+}
+.slider-counter {
+  font-size: 1rem;
+}
+.slider-container {
+  padding-top: 20px;
+  display: block;
+  text-align: center;
+  justify-content: center;
+}
+/*---- CENTER ----*/
+.content #content-bottom #bottom-center {
+  flex: 1 1 0px;
+}
+/*---- RIGHT ----*/
+.content #content-bottom #bottom-right {
+  flex: 1 1 0px;
+}
+
+/*------------  SINGLE BLOCK DEPENDENCIES ------------ */
+.block-title {
+  height: 10%;
+  color: white;
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.block-content {
+  height: 80%;
+}
+.block-footer {
+  height: 10%;
+  color: white;
+  text-align: center;
+}
+
+/*---------------------------- FOOTER ----------------------------*/
+.footer {
+  min-height: 10%;
+  display: flex;
+  align-self: center;
+  margin-top: auto;
+}
+.footer #footerContent {
+  align-self: center;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+}
+
+/*---------------------------- KEY-FRAMES ----------------------------*/
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.3;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 1;
+  }
+}

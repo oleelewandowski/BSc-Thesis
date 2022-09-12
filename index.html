@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FM Modulation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <span id="headerContent">
+          <strong>
+            Laboratory simulator for presentation of fading in FM radio links
+          </strong>
+        </span>
+      </div>
+      <div class="content">
+        <div id="content-top">
+          <div id="top-left">
+            <div class="block-title">carrier signal generator</div>
+            <div class="block-content">
+              <canvas id="myCanvas">
+              </div>
+              <div class="block-footer">
+                <button onclick="playCarrierSignal()">Play</button>
+                <button onclick="drawCarrierSignal()">Draw</button>
+              </div>
+          </div>
+          <div id="top-center"></div>
+          <div id="top-right">
+            <div class="block-title">control panel</div>
+            <div class="block-content">
+              <div class="content-draw"></div>
+            </div>
+            <div class="block-footer"></div>
+          </div>
+        </div>
+        <div id="content-center">
+          <div id="center-left">
+            <div class="block-title">message signal generator</div>
+            <div class="block-content"></div>
+            <div class="block-footer"></div>
+          </div>
+          <div id="center-center">
+            <div class="block-title">modulated signal</div>
+            <div class="block-content"></div>
+            <div class="block-footer"></div>
+          </div>
+          <div id="center-right">
+            <div class="block-title">demodulated signal</div>
+            <div class="block-content"></div>
+            <div class="block-footer"></div>
+          </div>
+        </div>
+        <div id="content-bottom">
+          <div id="bottom-left">
+            <div class="block-title">noise generator</div>
+            <div class="block-content">
+              <div class="slider-container">
+                <input
+                  class="slider"
+                  type="range"
+                  min="0"
+                  max="20"
+                  step="2"
+                  value="10"
+                  onchange=""
+                />
+                <!-- <div class="slider-counter"><span>10</span></div> -->
+              </div>
+            </div>
+            <div class="block-footer"></div>
+          </div>
+          <div id="bottom-center"></div>
+          <div id="bottom-right"></div>
+        </div>
+      </div>
+      <div class="footer">
+        <span id="footerContent">
+          <img alt="Footer icon" src="./Images/c-circle.svg" />
+          2022 FM Modulator. All rights reserved.
+        </span>
+      </div>
+    </div>
+    <script type="text/javascript" src="App.js"></script>
+  </body>
+</html>
