@@ -36,43 +36,47 @@
                   <div class="control-panel-title">carrier signal</div>
                   <div class="signal-parameter-title">amplitude</div>
                   <input 
+                  id="carrier-input-amplitude" 
                   class="slider" 
                   type="range"                   
                   min="0"
                   max="1"
                   step="0.1"
                   oninput="handleCarrierAmplitudeChange(this.value)"/>
-                  <div class="carrier-div-amplitude">0</div>
+                  <div class="carrier-div-amplitude"></div>
                   <div class="signal-parameter-title">frequency</div>
                   <input 
+                  id="carrier-input-freq" 
                   class="slider" 
                   type="range"                   
                   min="0"
                   max="4000"
                   step="100"
                   oninput="handleCarrierFreqChange(this.value)"/>
-                  <div class="carrier-div-frequency">0</div>
+                  <div class="carrier-div-frequency"></div>
                 </div>
                 <div class="message-panel">
                   <div class="control-panel-title">message signal</div>
                   <div class="signal-parameter-title">amplitude</div>
                   <input 
+                  id="message-input-amplitude" 
                   class="slider" 
                   type="range"                   
                   min="0"
                   max="1"
                   step="0.1"
                   oninput="handleMessageAmplitudeChange(this.value)"/>
-                  <div class="message-div-amplitude">0</div>
+                  <div class="message-div-amplitude"></div>
                   <div class="signal-parameter-title">frequency</div>
                   <input 
+                  id="message-input-freq" 
                   class="slider" 
                   type="range"                   
                   min="0"
                   max="400"
                   step="50"
                   oninput="handleMessageFreqChange(this.value)"/>
-                  <div class="message-div-frequency">0</div>
+                  <div class="message-div-frequency"></div>
                 </div>
              </div>
             </div>

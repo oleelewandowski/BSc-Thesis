@@ -1,5 +1,6 @@
 const SAMPLING_FREQUENCY = 44100;
 const SOUND_DURATION = 1; //sound 1s draw 10ms
+
 const BETA = 5;
 
 //CARRIER VARIABLES
@@ -13,9 +14,13 @@ let MESSAGE_AMPLITUDE = 0.5;
 let MESSAGE_ANGULAR_FREQUENCY = MESSAGE_REAL_TIME_FREQUENCY * 2 * Math.PI;
 
 // CONSTS
-const CARRIER_AMPLITUDE_MAX = 1; //max for plot
-const MESSAGE_AMPLITUDE_MAX = 1; //max for plot
-const MODULATED_AMPLITUDE_MAX = 1; //max for plot
+//INITIAL PARAMETERS
+const INITIAL_SIGNALS_AMPLITUDE = 0.5;
+const INITIAL_CARRIER_REAL_TIME_FREQUENCY = 2000;
+const INITIAL_MESSAGE_REAL_TIME_FREQUENCY = 200;
+
+//MAX FOR PLOT
+const SIGNALS_AMPLITUDE_MAX = 1;
 
 //CARRIER
 const playCarrierSignal = () => {
@@ -64,6 +69,8 @@ const drawCarrierSignal = () => {
   let axes = {};
 
   ctx = canvas.getContext("2d");
+
+  //clear rect if function called
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   axes.x0 = 0.5 * canvas.width;
@@ -80,7 +87,7 @@ const drawCarrierSignal = () => {
   let dt = (tstop - tstart) / SAMPLING_FREQUENCY; // time increment
 
   axes.xscale = canvas.width / (2 * carrierDuration); // x pixs per s
-  axes.yscale = canvas.height / (2 * CARRIER_AMPLITUDE_MAX); // y pixs per V
+  axes.yscale = canvas.height / (2 * SIGNALS_AMPLITUDE_MAX); // y pixs per V
   axes.sampFreq = SAMPLING_FREQUENCY;
 
   // samples
@@ -93,7 +100,6 @@ const drawCarrierSignal = () => {
   // plot function
   graphArray(ctx, axes, time, carrierData, "rgb(255,255,255)", 1);
 };
-
 //MESSAGE
 const playMessageSignal = () => {
   const ALL_SAMPLES = SOUND_DURATION * SAMPLING_FREQUENCY;
@@ -136,6 +142,8 @@ const drawMessageSignal = () => {
   let axes = {};
 
   ctx = canvas.getContext("2d");
+
+  //clear rect if function called
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   axes.x0 = 0.5 * canvas.width;
@@ -152,7 +160,7 @@ const drawMessageSignal = () => {
   let dt = (tstop - tstart) / SAMPLING_FREQUENCY; // time increment
 
   axes.xscale = canvas.width / (2 * messageDuration); // x pixs per s
-  axes.yscale = canvas.height / (2 * MESSAGE_AMPLITUDE_MAX); // y pixs per V
+  axes.yscale = canvas.height / (2 * SIGNALS_AMPLITUDE_MAX); // y pixs per V
   axes.sampFreq = SAMPLING_FREQUENCY;
 
   // samples
@@ -165,7 +173,6 @@ const drawMessageSignal = () => {
   // plot function
   graphArray(ctx, axes, time, messageData, "rgb(255,255,255)", 1);
 };
-
 //MODULATED
 const playModulatedSignal = () => {
   const ALL_SAMPLES = SOUND_DURATION * SAMPLING_FREQUENCY;
@@ -210,6 +217,8 @@ const drawModulatedSignal = () => {
   let canvas = document.querySelector("#my-modulated-canvas");
   if (null === canvas || !canvas.getContext) return 0;
   ctx = canvas.getContext("2d");
+
+  //clear rect if function called
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // axes center coordinates
@@ -229,7 +238,7 @@ const drawModulatedSignal = () => {
   let dt = (tstop - tstart) / SAMPLING_FREQUENCY; // time increment
 
   axes.xscale = canvas.width / (2 * modulatedDuration); // x pixs per s
-  axes.yscale = canvas.height / (2 * MODULATED_AMPLITUDE_MAX); // y pixs per V
+  axes.yscale = canvas.height / (2 * SIGNALS_AMPLITUDE_MAX); // y pixs per V
   axes.sampFreq = SAMPLING_FREQUENCY;
 
   // samples
@@ -246,8 +255,7 @@ const drawModulatedSignal = () => {
   // plot function
   graphArray(ctx, axes, time, modulatedData, "rgb(255,255,255)", 1);
 };
-
-//UTIL
+//UTIL FOR FUNCTIONS DRAWING
 const graphArray = (ctx, axes, t, data, color, thick) => {
   let t0 = axes.x0;
   let y0 = axes.y0;
@@ -285,55 +293,92 @@ const showAxes = (ctx, axes) => {
   ctx.stroke();
 };
 
-//S/N RATIO
+//S/N RATIO HANDLER
 const handleSNOnInput = (newValue) => {
+  //get dom element
   const sliderDivCounter = document.querySelector(".slider-counter");
+  //parse value to number
   const enteredValue = Number(newValue);
+  //show value in counter
   sliderDivCounter.innerHTML = `${enteredValue} [decibel]`;
 };
 
 //CONTROL PANEL AMPLITUDE, FREQ CHANGE
 const handleCarrierAmplitudeChange = (newValue) => {
+  //get dom elements
   const carrierDivAmplitude = document.querySelector(".carrier-div-amplitude");
+  const inputElement = document.querySelector("#carrier-input-amplitude");
+  //parse to number to be sure
   const enteredValue = Number(newValue);
+  //show proper input value
+  inputElement.value = enteredValue;
+  //show value in counter
   carrierDivAmplitude.innerHTML = `${enteredValue} [V]`;
+  //overwrite amplitude to entered one
   CARRIER_AMPLITUDE = enteredValue;
+  //draw signals
   drawCarrierSignal();
   drawModulatedSignal();
 };
 const handleCarrierFreqChange = (newValue) => {
+  //get dom elements
   const carrierDivFreq = document.querySelector(".carrier-div-frequency");
+  const inputElement = document.querySelector("#carrier-input-freq");
+  //parse to number to be sure
   const enteredValue = Number(newValue);
+  //show proper input value
+  inputElement.value = enteredValue;
+  //show value in counter
   carrierDivFreq.innerHTML = `${enteredValue} [Hz]`;
+  //overwrite freq to entered one
   CARRIER_REAL_TIME_FREQUENCY = enteredValue;
   CARRIER_ANGULAR_FREQUENCY = CARRIER_REAL_TIME_FREQUENCY * 2 * Math.PI;
+  //draw signals
   drawCarrierSignal();
   drawModulatedSignal();
 };
 const handleMessageAmplitudeChange = (newValue) => {
+  //get dom elements
   const messageDivAmplitude = document.querySelector(".message-div-amplitude");
+  const inputElement = document.querySelector("#message-input-amplitude");
+  //parse to number to be sure
   const enteredValue = Number(newValue);
+  //show proper input value
+  inputElement.value = enteredValue;
+  //show value in counter
   messageDivAmplitude.innerHTML = `${enteredValue} [V]`;
+  //overwrite amplitude to entered one
   MESSAGE_AMPLITUDE = enteredValue;
+  //draw signals
   drawMessageSignal();
   drawModulatedSignal();
 };
 const handleMessageFreqChange = (newValue) => {
+  //get dom elements
   const messageDivFreq = document.querySelector(".message-div-frequency");
+  const inputElement = document.querySelector("#message-input-freq");
+  //parse to number to be sure
   const enteredValue = Number(newValue);
+  //show proper input value
+  inputElement.value = enteredValue;
+  //show value in counter
   messageDivFreq.innerHTML = `${enteredValue} [Hz]`;
+  //overwrite freq to entered one
   MESSAGE_REAL_TIME_FREQUENCY = enteredValue;
   MESSAGE_ANGULAR_FREQUENCY = MESSAGE_REAL_TIME_FREQUENCY * 2 * Math.PI;
+  //draw signals
   drawMessageSignal();
   drawModulatedSignal();
 };
 
 //INITIAL START / RESET TO DEFAULT PARAMS
 const startAppWithDefaultParameters = () => {
-  handleCarrierAmplitudeChange(CARRIER_AMPLITUDE);
-  handleCarrierFreqChange(CARRIER_REAL_TIME_FREQUENCY);
-  handleMessageAmplitudeChange(MESSAGE_AMPLITUDE);
-  handleMessageFreqChange(MESSAGE_REAL_TIME_FREQUENCY);
+  //set initial params if reset/initial start
+  handleCarrierAmplitudeChange(INITIAL_SIGNALS_AMPLITUDE);
+  handleCarrierFreqChange(INITIAL_CARRIER_REAL_TIME_FREQUENCY);
+  handleMessageAmplitudeChange(INITIAL_SIGNALS_AMPLITUDE);
+  handleMessageFreqChange(INITIAL_MESSAGE_REAL_TIME_FREQUENCY);
+  //draw signals with initial params
   drawCarrierSignal();
   drawMessageSignal();
   drawModulatedSignal();
