@@ -7,10 +7,10 @@
     <title>FM Modulation</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
+  <body onload="startAppWithDefaultParameters()">
     <div class="wrapper">
       <div class="header">
-        <span id="headerContent">
+        <span id="header-content">
           <strong>
             Laboratory simulator for presentation of fading in FM radio links
           </strong>
@@ -19,44 +19,97 @@
       <div class="content">
         <div id="content-top">
           <div id="top-left">
-            <div class="block-title">carrier signal generator</div>
-            <div class="block-content">
-              <canvas id="myCanvas">
+            <div class="block-title">carrier signal</div>
+              <div class="block-content">
+                  <canvas id="my-carrier-canvas">
               </div>
               <div class="block-footer">
-                <button onclick="playCarrierSignal()">Play</button>
-                <button onclick="drawCarrierSignal()">Draw</button>
+                    <button class="footer-button" onclick="playCarrierSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
               </div>
-          </div>
-          <div id="top-center"></div>
-          <div id="top-right">
+              </div>
+            <div id="top-center"></div>
+            <div id="top-right">
             <div class="block-title">control panel</div>
             <div class="block-content">
-              <div class="content-draw"></div>
+              <div id="control-panel">
+                <div class="carrier-panel">
+                  <div class="control-panel-title">carrier signal</div>
+                  <div class="signal-parameter-title">amplitude</div>
+                  <input 
+                  class="slider" 
+                  type="range"                   
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  oninput="handleCarrierAmplitudeChange(this.value)"/>
+                  <div class="carrier-div-amplitude">0</div>
+                  <div class="signal-parameter-title">frequency</div>
+                  <input 
+                  class="slider" 
+                  type="range"                   
+                  min="0"
+                  max="4000"
+                  step="100"
+                  oninput="handleCarrierFreqChange(this.value)"/>
+                  <div class="carrier-div-frequency">0</div>
+                </div>
+                <div class="message-panel">
+                  <div class="control-panel-title">message signal</div>
+                  <div class="signal-parameter-title">amplitude</div>
+                  <input 
+                  class="slider" 
+                  type="range"                   
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  oninput="handleMessageAmplitudeChange(this.value)"/>
+                  <div class="message-div-amplitude">0</div>
+                  <div class="signal-parameter-title">frequency</div>
+                  <input 
+                  class="slider" 
+                  type="range"                   
+                  min="0"
+                  max="400"
+                  step="50"
+                  oninput="handleMessageFreqChange(this.value)"/>
+                  <div class="message-div-frequency">0</div>
+                </div>
+             </div>
             </div>
-            <div class="block-footer"></div>
+            <div class="block-footer">
+              <button class="footer-button" onclick="startAppWithDefaultParameters()">reset to default params</button>
+            </div>
           </div>
         </div>
         <div id="content-center">
           <div id="center-left">
-            <div class="block-title">message signal generator</div>
-            <div class="block-content"></div>
-            <div class="block-footer"></div>
+            <div class="block-title">message signal</div>
+            <div class="block-content">
+              <canvas id="my-message-canvas"></canvas>
+            </div>
+              
+            <div class="block-footer">
+              <button class="footer-button" onclick="playMessageSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
+            </div>
           </div>
           <div id="center-center">
             <div class="block-title">modulated signal</div>
-            <div class="block-content"></div>
-            <div class="block-footer"></div>
+            <div class="block-content">
+              <canvas id="my-modulated-canvas"></canvas>
+            </div>
+            <div class="block-footer">
+              <button class="footer-button" onclick="playModulatedSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
+            </div>
           </div>
           <div id="center-right">
             <div class="block-title">demodulated signal</div>
             <div class="block-content"></div>
             <div class="block-footer"></div>
           </div>
-        </div>
-        <div id="content-bottom">
+         </div>
+          <div id="content-bottom">
           <div id="bottom-left">
-            <div class="block-title">noise generator</div>
+            <div class="block-title">S/N</div>
             <div class="block-content">
               <div class="slider-container">
                 <input
@@ -64,11 +117,10 @@
                   type="range"
                   min="0"
                   max="20"
-                  step="2"
-                  value="10"
-                  onchange=""
+                  step="1"
+                  oninput="handleSNOnInput(this.value)"
                 />
-                <!-- <div class="slider-counter"><span>10</span></div> -->
+                <div class="slider-counter">not active</div>
               </div>
             </div>
             <div class="block-footer"></div>
@@ -78,12 +130,12 @@
         </div>
       </div>
       <div class="footer">
-        <span id="footerContent">
-          <img alt="Footer icon" src="./Images/c-circle.svg" />
+          <img alt="Footer icon" src="./Images/c-circle.svg"/> 
+          <div class="footer-content">
           2022 FM Modulator. All rights reserved.
-        </span>
+        </div>
       </div>
     </div>
-    <script type="text/javascript" src="App.js"></script>
+    <script type="text/javascript" src="./App.js"></script>
   </body>
 </html>

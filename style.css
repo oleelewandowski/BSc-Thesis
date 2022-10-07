@@ -15,7 +15,7 @@ body {
 }
 body .wrapper {
   height: 100%;
-  width: 85%;
+  width: 75%;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   display: flex;
@@ -25,11 +25,12 @@ body .wrapper {
 /*---------------------------- HEADER ----------------------------*/
 .header {
   min-height: 10%;
+  height: auto;
   display: flex;
   align-self: center;
   text-align: center;
 }
-.header #headerContent {
+.header #header-content {
   align-self: center;
   font-size: 1.5rem;
   font-weight: 400;
@@ -64,11 +65,12 @@ body .wrapper {
   flex: 1 1 0px;
   border: 2px solid white;
   box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
-}
-#myCanvas {
   display: flex;
+  flex-direction: column;
+}
+#my-carrier-canvas {
   width: 100%;
-  height: 95%;
+  height: auto;
 }
 /*------- CENTER -------*/
 .content #content-top #top-center {
@@ -79,7 +81,43 @@ body .wrapper {
   flex: 1 1 0px;
   border: 2px solid white;
   box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+  display: flex;
+  flex-direction: column;
 }
+#control-panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+.carrier-panel {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.message-panel {
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.control-panel-title {
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+.signal-parameter-title {
+  text-align: center;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding-top: 10px;
+}
+
 /*----------------  CENTER ---------------- */
 .content #content-center {
   height: 100%;
@@ -92,12 +130,25 @@ body .wrapper {
   flex: 1 1 0px;
   border: 2px solid white;
   box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+  display: flex;
+  flex-direction: column;
+}
+#my-message-canvas {
+  width: 100%;
+  height: auto;
 }
 /*------- CENTER -------*/
 .content #content-center #center-center {
   flex: 1 1 0px;
   border: 2px solid white;
   box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
+  display: flex;
+  flex-direction: column;
+}
+
+#my-modulated-canvas {
+  width: 100%;
+  height: auto;
 }
 /*------- RIGHT -------*/
 .content #content-center #center-right {
@@ -119,42 +170,27 @@ body .wrapper {
   border: 2px solid white;
   box-shadow: inset 0 0 2rem rgb(0 0 0 / 20%);
 }
-/*-- NOISE GENERATOR --*/
-.slider {
-  -webkit-appearance: none;
-  width: 80%;
-  height: 20px;
-  background: white;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
-}
-.slider:hover {
-  opacity: 1;
-}
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: black;
-  cursor: pointer;
-}
-.slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: black;
-  cursor: pointer;
-}
-.slider-counter {
-  font-size: 1rem;
-}
+/*-- S/N --*/
 .slider-container {
   padding-top: 20px;
   display: block;
   text-align: center;
   justify-content: center;
+}
+.slider {
+  width: 80%;
+  height: 20px;
+  opacity: 0.7;
+}
+.slider:hover {
+  opacity: 1;
+}
+.slider-counter {
+  font-size: 1rem;
+  color: white;
+  text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
 }
 /*---- CENTER ----*/
 .content #content-bottom #bottom-center {
@@ -167,33 +203,57 @@ body .wrapper {
 
 /*------------  SINGLE BLOCK DEPENDENCIES ------------ */
 .block-title {
-  height: 10%;
+  height: auto;
   color: white;
   text-align: center;
   letter-spacing: 4px;
   text-transform: uppercase;
+  border-bottom: 2px solid white;
+  padding-bottom: 1px;
 }
 .block-content {
-  height: 80%;
+  height: 100%;
+  padding-top: 4px;
 }
 .block-footer {
-  height: 10%;
-  color: white;
+  height: auto;
+  display: flex;
+}
+.footer-button {
+  flex-grow: 1;
+  border-color: transparent;
+  color: #333;
   text-align: center;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  height: 25px;
+}
+.footer-button:hover {
+  border-color: #333;
+  background-color: gainsboro;
 }
 
 /*---------------------------- FOOTER ----------------------------*/
 .footer {
   min-height: 10%;
   display: flex;
-  align-self: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 3px;
   margin-top: auto;
 }
-.footer #footerContent {
-  align-self: center;
+.footer-content {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
+  -webkit-animation-name: fadeIn;
+  -webkit-animation-duration: 0.5s;
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+}
+.footer img {
+  padding: 0;
   -webkit-animation-name: fadeIn;
   -webkit-animation-duration: 0.5s;
   animation-name: fadeIn;
