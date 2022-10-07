@@ -1,23 +1,27 @@
 const SAMPLING_FREQUENCY = 44100;
 const SOUND_DURATION = 1; //sound 1s draw 10ms
-
 const BETA = 5;
 
-//CARRIER VARIABLES
-let CARRIER_REAL_TIME_FREQUENCY = 2000;
-let CARRIER_AMPLITUDE = 0.5;
-let CARRIER_ANGULAR_FREQUENCY = CARRIER_REAL_TIME_FREQUENCY * 2 * Math.PI;
+// SN BUTTON FLAG
+let isSNDisabled = false;
 
+//CARRIER VARIABLES
+let CARRIER_REAL_TIME_FREQUENCY;
+let CARRIER_AMPLITUDE;
+let CARRIER_ANGULAR_FREQUENCY = CARRIER_REAL_TIME_FREQUENCY * 2 * Math.PI;
 //MESSAGE VARIABLES
-let MESSAGE_REAL_TIME_FREQUENCY = 200;
-let MESSAGE_AMPLITUDE = 0.5;
+let MESSAGE_REAL_TIME_FREQUENCY;
+let MESSAGE_AMPLITUDE;
 let MESSAGE_ANGULAR_FREQUENCY = MESSAGE_REAL_TIME_FREQUENCY * 2 * Math.PI;
+//SN VARIABLES
+let SN_POWER;
 
 // CONSTS
 //INITIAL PARAMETERS
 const INITIAL_SIGNALS_AMPLITUDE = 0.5;
 const INITIAL_CARRIER_REAL_TIME_FREQUENCY = 2000;
 const INITIAL_MESSAGE_REAL_TIME_FREQUENCY = 200;
+const INITIAL_SN_POWER = 15;
 
 //MAX FOR PLOT
 const SIGNALS_AMPLITUDE_MAX = 1;
@@ -297,10 +301,40 @@ const showAxes = (ctx, axes) => {
 const handleSNOnInput = (newValue) => {
   //get dom element
   const sliderDivCounter = document.querySelector(".slider-counter");
+  const inputElement = document.querySelector("#sn-input");
   //parse value to number
   const enteredValue = Number(newValue);
+  //show proper input value
+  inputElement.value = enteredValue;
   //show value in counter
   sliderDivCounter.innerHTML = `${enteredValue} [decibel]`;
+  //overwrite sn power
+  SN_POWER = enteredValue;
+};
+
+const handleSNButton = () => {
+  handleSNOnInput(INITIAL_SN_POWER);
+  //button text and flag handler
+  const DISABLE = "disable";
+  const ENABLE = "enable";
+  let buttonText = "";
+  //get dom elements
+  const buttonElement = document.querySelector("#sn-button");
+  const inputElement = document.querySelector("#sn-input");
+  const sliderDivCounter = document.querySelector(".slider-counter");
+  //condition
+  isSNDisabled === true ? (buttonText = ENABLE) : (buttonText = DISABLE);
+  //enable-disable
+  isSNDisabled = !isSNDisabled;
+  //change label
+  buttonElement.innerHTML = buttonText;
+  //add styles
+  if (buttonText === ENABLE) {
+    inputElement.disabled = true;
+    sliderDivCounter.innerHTML = "s/n turned off";
+  } else {
+    inputElement.disabled = false;
+  }
 };
 
 //CONTROL PANEL AMPLITUDE, FREQ CHANGE

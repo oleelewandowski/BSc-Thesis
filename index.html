@@ -10,15 +10,15 @@
   <body onload="startAppWithDefaultParameters()">
     <div class="wrapper">
       <div class="header">
-        <span id="header-content">
+        <span class="header-content">
           <strong>
             Laboratory simulator for presentation of fading in FM radio links
           </strong>
         </span>
       </div>
       <div class="content">
-        <div id="content-top">
-          <div id="top-left">
+        <div class="content-top">
+          <div class="top-left">
             <div class="block-title">carrier signal</div>
               <div class="block-content">
                   <canvas id="my-carrier-canvas">
@@ -27,8 +27,8 @@
                     <button class="footer-button" onclick="playCarrierSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
               </div>
               </div>
-            <div id="top-center"></div>
-            <div id="top-right">
+            <div class="top-center"></div>
+            <div class="top-right">
             <div class="block-title">control panel</div>
             <div class="block-content">
               <div id="control-panel">
@@ -85,8 +85,8 @@
             </div>
           </div>
         </div>
-        <div id="content-center">
-          <div id="center-left">
+        <div class="content-center">
+          <div class="center-left">
             <div class="block-title">message signal</div>
             <div class="block-content">
               <canvas id="my-message-canvas"></canvas>
@@ -96,7 +96,7 @@
               <button class="footer-button" onclick="playMessageSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
             </div>
           </div>
-          <div id="center-center">
+          <div class="center-center">
             <div class="block-title">modulated signal</div>
             <div class="block-content">
               <canvas id="my-modulated-canvas"></canvas>
@@ -105,32 +105,38 @@
               <button class="footer-button" onclick="playModulatedSignal()"> <img alt="loudspeaker" src="./Images/megaphone.svg" /></button>
             </div>
           </div>
-          <div id="center-right">
+          <div class="center-right">
             <div class="block-title">demodulated signal</div>
             <div class="block-content"></div>
             <div class="block-footer"></div>
           </div>
          </div>
-          <div id="content-bottom">
-          <div id="bottom-left">
+          <div class="content-bottom">
+          <div class="bottom-left"></div>
+          <div class="bottom-center"></div>
+          <div class="bottom-right">
             <div class="block-title">S/N</div>
             <div class="block-content">
               <div class="slider-container">
                 <input
+                  disabled
+                  id="sn-input" 
                   class="slider"
                   type="range"
                   min="0"
-                  max="20"
+                  max="30"
                   step="1"
                   oninput="handleSNOnInput(this.value)"
                 />
-                <div class="slider-counter">not active</div>
+                <div class="slider-counter">s/n turned off</div>
               </div>
             </div>
-            <div class="block-footer"></div>
+            <div class="block-footer">
+              <button onclick="handleSNButton()" class="footer-button" id="sn-button">
+                enable
+              </button>
+            </div>
           </div>
-          <div id="bottom-center"></div>
-          <div id="bottom-right"></div>
         </div>
       </div>
       <div class="footer">
