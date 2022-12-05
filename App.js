@@ -285,7 +285,7 @@ const demodulateSignal = (modulatedData) => {
 
   let v_dem_FDP_I = [];
   let v_dem_FDP_Q = [];
-  let filtrDP = getFiltrDP(SAMPLING_FREQUENCY);
+  let filtrDP = getFiltrDP(INITIAL_CARRIER_REAL_TIME_FREQUENCY);
 
   v_dem_FDP_I = convolve(v_dem_sin0stopni, filtrDP);
   v_dem_FDP_Q = convolve(v_dem_sin90stopni, filtrDP);
@@ -315,19 +315,18 @@ const demodulateSignal = (modulatedData) => {
     v_dem_syg_roznicowy[i] = v_dem_FDP_I_dQ[i] - v_dem_FDP_Q_dI[i];
   }
 
-  console.log("v_dem_FDP_I_dQ", v_dem_FDP_I_dQ);
-  console.log("v_dem_FDP_Q_dI", v_dem_FDP_Q_dI);
-
   return v_dem_syg_roznicowy;
 };
-const getFiltrDP = (sampFreq) => {
-  let p = -sampFreq / 2;
+const getFiltrDP = (tempCutoffFreq) => {
+  let cutoffFreq = tempCutoffFreq / 2;
+  let p = -cutoffFreq / 2;
   let filtrDP = [];
-  for (let i = 0; i < sampFreq; i++) {
+  for (let i = 0; i < cutoffFreq; i++) {
     if (p === 0) filtrDP[i] = 1;
     else filtrDP[i] = Math.sin(p) / p;
     p = p + 1;
   }
+  console.log(filtrDP);
   return filtrDP;
 };
 const convolve = (vec1, vec2) => {
@@ -352,8 +351,9 @@ const convolve = (vec1, vec2) => {
     displacement++;
   }
 
+  let diff = convVec.length - firstVector.length + 1;
   let helper = 0;
-  for (let i = SAMPLING_FREQUENCY / 2; i < (SAMPLING_FREQUENCY / 2) * 3; i++) {
+  for (let i = diff / 2; i < firstVector.length + diff / 2; i++) {
     convVecSame[helper] = convVec[i];
     helper++;
   }
@@ -394,7 +394,7 @@ const drawDemodulatedSignal = () => {
 
   for (let sample = 0; sample < SAMPLING_FREQUENCY; sample++) {
     time[sample] = tstart + sample * dt;
-    demodulatedData[sample] = Math.pow(10, 6) * demodulatedDataArray[sample];
+    demodulatedData[sample] = Math.pow(10, 5) * demodulatedDataArray[sample];
   }
 
   // plot function
@@ -520,7 +520,6 @@ const handleCarrierAmplitudeChange = (newValue) => {
   //draw signals
   drawCarrierSignal();
   drawModulatedSignal();
-  drawDemodulatedSignal();
 };
 const handleCarrierFreqChange = (newValue) => {
   //get dom elements
@@ -538,7 +537,6 @@ const handleCarrierFreqChange = (newValue) => {
   //draw signals
   drawCarrierSignal();
   drawModulatedSignal();
-  drawDemodulatedSignal();
 };
 const handleMessageAmplitudeChange = (newValue) => {
   //get dom elements
@@ -555,7 +553,6 @@ const handleMessageAmplitudeChange = (newValue) => {
   //draw signals
   drawMessageSignal();
   drawModulatedSignal();
-  drawDemodulatedSignal();
 };
 const handleMessageFreqChange = (newValue) => {
   //get dom elements
@@ -573,7 +570,6 @@ const handleMessageFreqChange = (newValue) => {
   //draw signals
   drawMessageSignal();
   drawModulatedSignal();
-  drawDemodulatedSignal();
 };
 
 //INITIAL START / RESET TO DEFAULT PARAMS
@@ -587,5 +583,6 @@ const startAppWithDefaultParameters = () => {
   drawCarrierSignal();
   drawMessageSignal();
   drawModulatedSignal();
+  demodulateSignal(modulatedData);
   drawDemodulatedSignal();
 };
